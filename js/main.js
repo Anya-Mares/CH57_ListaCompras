@@ -9,7 +9,14 @@ const tablaListaCompras = document.getElementById("tablaListaCompras");
 const cuerpoTabla = tablaListaCompras.getElementsByTagName("tbody").item(0);
 
 
+const contadorProductos = document.getElementById("contadorProductos");
+const productosTotal = document.getElementById("productosTotal");
+const precioTotal = document.getElementById("precioTotal");
+
 let cont = 0;
+let totalEnProducto =0;
+let costoTotal = 0;
+
 
 function ValidarCantidad(){
     if (txtNumber.value.length==0 ){
@@ -68,9 +75,16 @@ let row=`<tr>
 ;
 
 cuerpoTabla.insertAdjacentHTML("beforeend", row);
+contadorProductos.innerText=cont;//lo mismo que se coloca en espacio 
+totalEnProducto += Number(txtNumber.value);
+productosTotal.innerText = totalEnProducto;
+costoTotal += precio * Number(txtNumber.value);//total
+//costoTotal.toFixed(2) // forma facil 
+precioTotal.innerText = new Intl.NumberFormat("es-MX", 
+                    { style: "currency", currency: "MXN" }).format(costoTotal);//forma correcta
 txtName.value ="";
 txtNumber.value ="";
-txtName.focus();
+txtName.focus();//señalar el espacio para empezar
 
 }//isValid
 
