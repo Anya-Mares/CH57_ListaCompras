@@ -16,7 +16,8 @@ const precioTotal = document.getElementById("precioTotal");
 let cont = 0;
 let totalEnProducto =0;
 let costoTotal = 0;
-
+let datos = new Array();
+//otra forma de definirlo [];
 
 function ValidarCantidad(){
     if (txtNumber.value.length==0 ){
@@ -73,7 +74,15 @@ let row=`<tr>
 <td>${precio}</td>
 </tr>`
 ;
-
+//objeto
+let elemento = {
+"cont" : cont, 
+"nombre" : txtName.value,
+"cantidad" : txtNumber.value,
+"prrecio" : precio,
+};
+datos.push(elemento);
+localStorage.setItem("datos", JSON.stringify(datos));
 cuerpoTabla.insertAdjacentHTML("beforeend", row);
 contadorProductos.innerText=cont;//lo mismo que se coloca en espacio 
 totalEnProducto += Number(txtNumber.value);
@@ -82,6 +91,16 @@ costoTotal += precio * Number(txtNumber.value);//total
 //costoTotal.toFixed(2) // forma facil 
 precioTotal.innerText = new Intl.NumberFormat("es-MX", 
                     { style: "currency", currency: "MXN" }).format(costoTotal);//forma correcta
+
+                    let resumen = {
+
+                        "cont" : cont,
+                        "totalEnProducto" : totalEnProducto,
+        /*propiedad*/    "costoTotal" : costoTotal //valor
+
+                    };
+                    localStorage.setItem("resumen", JSON.stringify(resumen));
+
 txtName.value ="";
 txtNumber.value ="";
 txtName.focus();//señalar el espacio para empezar
